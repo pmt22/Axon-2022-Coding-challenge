@@ -1,18 +1,24 @@
 package vn.pmt.eventconsumer.model;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Mai Thiên Phú
  * @since 30/08/2022
  */
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @EqualsAndHashCode(of = "id")
 public class Incident {
     private Integer id;
@@ -25,4 +31,7 @@ public class Incident {
 
     @JsonIgnore
     private boolean isResolved;
+
+    @JsonIgnore
+    private LocalDateTime occurredTime = LocalDateTime.now();
 }

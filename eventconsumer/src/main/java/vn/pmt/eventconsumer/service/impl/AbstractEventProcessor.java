@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vn.pmt.eventconsumer.datasource.OfficerIncidentRepository;
 import vn.pmt.eventconsumer.model.Event;
 import vn.pmt.eventconsumer.service.EventProcessor;
+import vn.pmt.eventconsumer.service.OfficerMappingService;
 
 /**
  * @author Mai Thiên Phú
@@ -14,6 +15,8 @@ import vn.pmt.eventconsumer.service.EventProcessor;
 public abstract class AbstractEventProcessor<E extends Event> implements EventProcessor<E> {
     @Autowired
     protected OfficerIncidentRepository repository;
+    @Autowired
+    protected OfficerMappingService officerMappingService;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -21,6 +24,7 @@ public abstract class AbstractEventProcessor<E extends Event> implements EventPr
         Validate.isTrue(canProcess(event), "Cannot process this event of type %s with %s!",
             event.getClass().getSimpleName(), getClass().getSimpleName());
         processEvent((E) event);
+        officerMappingService.mapOfficer();
     }
 
     abstract protected void processEvent(E event);
