@@ -56,7 +56,9 @@ public class OfficerIncidentServiceImpl implements OfficerIncidentService {
     @Override
     public APIResponse getState() {
         APIResponse.Data data = new APIResponse.Data();
-        data.setOfficers(repository.getAllOfficers().stream().toList());
+        data.setOfficers(repository.getAllOfficers().stream()
+            .filter(officer -> officer.getLoc() != null && officer.isOnline())
+            .toList());
         data.setIncidents(Stream.concat(repository.getAllIncidents().stream(), repository.getAssignedOfficerIncident().values().stream()).toList());
         return new APIResponse(data, null);
     }
