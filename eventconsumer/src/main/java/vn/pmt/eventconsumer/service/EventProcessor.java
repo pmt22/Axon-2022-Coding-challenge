@@ -7,7 +7,7 @@ import vn.pmt.eventconsumer.model.Event;
  * @since 30/08/2022
  */
 public interface EventProcessor<E extends Event> {
-    void process(E event);
+    void process(Event event);
 
     boolean canProcess(Event event);
 }

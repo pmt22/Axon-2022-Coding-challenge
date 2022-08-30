@@ -2,22 +2,17 @@ package vn.pmt.eventconsumer.service.impl;
 
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
-import vn.pmt.eventconsumer.datasource.OfficerIncidentRepository;
 import vn.pmt.eventconsumer.model.Event;
-import vn.pmt.eventconsumer.service.EventProcessor;
 
 /**
  * @author Mai Thiên Phú
  * @since 30/08/2022
  */
 @Component
-@RequiredArgsConstructor
-public class OfficerGoesOnlineEventProcessor implements EventProcessor<Event.OfficerGoesOnline> {
-    private final OfficerIncidentRepository repository;
+public class OfficerGoesOnlineEventProcessor extends AbstractEventProcessor<Event.OfficerGoesOnline> {
 
     @Override
-    public void process(Event.OfficerGoesOnline event) {
+    protected void processEvent(Event.OfficerGoesOnline event) {
 
     }
 

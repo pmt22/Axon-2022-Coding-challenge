@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import vn.pmt.eventconsumer.datasource.OfficerIncidentRepository;
 import vn.pmt.eventconsumer.model.Event;
 import vn.pmt.eventconsumer.service.EventConsumingService;
 import vn.pmt.eventconsumer.service.EventProcessor;
@@ -16,7 +15,7 @@ import vn.pmt.eventconsumer.service.EventProcessor;
 @Service
 @RequiredArgsConstructor
 public class EventConsumingServiceImpl implements EventConsumingService {
-    private final List<EventProcessor<Event>> eventProcessors;
+    private final List<EventProcessor<? extends Event>> eventProcessors;
 
     @Override
     public void processEvent(Event event) {
