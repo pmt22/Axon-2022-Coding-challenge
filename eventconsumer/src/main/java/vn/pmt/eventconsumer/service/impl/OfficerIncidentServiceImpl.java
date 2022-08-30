@@ -2,11 +2,13 @@ package vn.pmt.eventconsumer.service.impl;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import vn.pmt.eventconsumer.datasource.OfficerIncidentRepository;
+import vn.pmt.eventconsumer.model.APIResponse;
 import vn.pmt.eventconsumer.model.Incident;
 import vn.pmt.eventconsumer.model.Officer;
 import vn.pmt.eventconsumer.service.OfficerIncidentService;
@@ -49,5 +51,13 @@ public class OfficerIncidentServiceImpl implements OfficerIncidentService {
                 repository.save(incident);
                 log.info("Unassign incident of an officer that went offline!");
             });
+    }
+
+    @Override
+    public APIResponse getState() {
+        APIResponse.Data data = new APIResponse.Data();
+        data.setOfficers(repository.getAllOfficers().stream().toList());
+        data.setIncidents(Stream.concat(repository.getAllIncidents().stream(), repository.getAssignedOfficerIncident().values().stream()).toList());
+        return new APIResponse(data, null);
     }
 }

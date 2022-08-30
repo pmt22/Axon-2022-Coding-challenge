@@ -1,5 +1,6 @@
 package vn.pmt.eventconsumer.service;
 
+import vn.pmt.eventconsumer.model.APIResponse;
 import vn.pmt.eventconsumer.model.Incident;
 import vn.pmt.eventconsumer.model.Officer;
 
@@ -13,4 +14,6 @@ public interface OfficerIncidentService {
     void unassignIncidentToOfficer(Integer incidentId);
 
     void unassignIncidentToOfficerGoesOffline(Integer officerId);
+
+    APIResponse getState();
 }
