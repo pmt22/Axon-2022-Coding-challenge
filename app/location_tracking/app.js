@@ -91,14 +91,16 @@ function drawAssignLines(incidents, officers) {
 
   incidents.forEach((incident) => {
     const officer = officers.find((o) => o.id === incident.officerId);
-    graphics.moveTo(
-      incident.loc.x * UNIT_WIDTH,
-      incident.loc.y * UNIT_HEIGHT
-    );
-    graphics.lineTo(
-      officer.loc.x,
-      officer.loc.y
-    );
+    if (officer !== undefined) {
+      graphics.moveTo(
+          incident.loc.x * UNIT_WIDTH,
+          incident.loc.y * UNIT_HEIGHT
+      );
+      graphics.lineTo(
+          officer.loc.x * UNIT_WIDTH,
+          officer.loc.y * UNIT_HEIGHT
+      );
+    }
   });
 
   app.stage.addChild(graphics);
@@ -122,7 +124,7 @@ function start() {
   });
 
   loop();
-  setInterval(loop, 5000);
+  setInterval(loop, 500);
 }
 
 async function loop() {
@@ -156,13 +158,12 @@ const sampleOfficers = [
 ];
 
 async function loadData() {
-  return {
-    data: {
-      incidents: sampleIncidents,
-      officers: sampleOfficers,
-    },
-    error: null,
-  };
+  return fetch('http://localhost:8080/api/v1/state')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      });
 }
 
 start();
